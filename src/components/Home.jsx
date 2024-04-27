@@ -11,10 +11,11 @@ import intro from '../assets/intro.jpg'
 import book from '../assets/book.jpg'
 import imgnew from '../assets/imgnew.jpg'
 import chooseus from '../assets/chooseus.jpg'
-import gradient from '../assets/gradient.jpg'
-import { FaHeadset, FaCar, FaDollarSign, FaUser, FaCarAlt, FaClipboardCheck } from 'react-icons/fa';
-import { IconButton } from '@mui/material';
+import { FaHeadset, FaCar, FaUser, FaCarAlt, FaClipboardCheck } from 'react-icons/fa';
+import { IconButton, Card, CardContent } from '@mui/material';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { FaRupeeSign } from "react-icons/fa";
+
 
 
 const Home = () => {
@@ -120,35 +121,63 @@ const Home = () => {
               <Typography variant="h4" style={{ color: 'black', fontWeight: 'bold', textAlign: 'center' }}>Why choose us</Typography>
               <Typography variant="h6" style={{ color: 'orange', textAlign: 'center', fontWeight: 'bold' }}>We Make Sure That Your Every
                 Trip Is Comfortable</Typography>
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
-                <img src={chooseus} alt="chooseus" style={{ width: '50%', height: 500, borderRadius: 10, marginRight: 10 }} />
-                <Grid container style={{ padding: 20, backgroundImage: `url(${gradient})`, backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: 10, boxShadow: "5px 10px gray" }}>
-                  <Grid item xs={12} sm={4} style={{ color: 'black', padding: 20, borderRadius: 10, display: "flex", flexDirection: "column", alignItems: 'center', border: "5px solid #ffc570" }}>
-                    <FaHeadset size={40} color='#A59306' />
-                    <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>24/7 customer support</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={4} style={{ color: 'black', padding: 20, borderRadius: 10, display: "flex", flexDirection: "column", alignItems: 'center', border: "5px solid #ffc570" }}>
-                    <FaCar size={40} color='#A59306' />
-                    <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Safe and comfortable rides</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={4} style={{ color: 'black', padding: 20, borderRadius: 10, display: "flex", flexDirection: "column", alignItems: 'center', border: "5px solid #ffc570" }}>
-                    <FaDollarSign size={40} color='#A59306' />
-                    <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Affordable rates</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={4} style={{ color: 'black', padding: 20, borderRadius: 10, display: "flex", flexDirection: "column", alignItems: 'center', border: "5px solid #ffc570" }} >
-                    <FaUser size={40} color='#A59306' />
-                    <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Professional drivers</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={4} style={{ color: 'black', padding: 20, borderRadius: 10, display: "flex", flexDirection: "column", alignItems: 'center', border: "5px solid #ffc570" }} >
-                    <FaCarAlt size={40} color='#A59306' />
-                    <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Clean and well-maintained vehicles</Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={4} style={{ color: 'black', padding: 20, borderRadius: 10, display: "flex", flexDirection: "column", alignItems: 'center', border: "5px solid #ffc570" }} >
-                    <FaClipboardCheck size={40} color='#A59306' />
-                    <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Easy booking process</Typography>
+              <Grid container style={{ marginTop: 30 }}>
+                <Grid item xs={12} sm={6}>
+                  <img src={chooseus} alt="chooseus" style={{ width: '90%', height: 500, borderRadius: 10, marginRight: 10 }} />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Grid container style={{ padding: 20 }} spacing={3}>
+                    <Grid item xs={12} sm={4}>
+                      <Card style={{ color: 'black', borderRadius: 10, border: "5px solid #ffc570", height: '100%' }}>
+                        <CardContent style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: 'center' }}>
+                          <FaHeadset size={40} color='#A59306' />
+                          <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>24/7 customer support</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <Card style={{ color: 'black', borderRadius: 10, border: "5px solid #ffc570", height: '100%' }}>
+                        <CardContent style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: 'center' }}>
+                          <FaCar size={40} color='#A59306' />
+                          <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Safe and comfortable rides</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <Card style={{ color: 'black', borderRadius: 10, border: "5px solid #ffc570", height: '100%' }}>
+                        <CardContent style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: 'center' }}>
+                          <FaRupeeSign size={40} color='#A59306' />
+                          <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Affordable rates</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <Card style={{ color: 'black', borderRadius: 10, border: "5px solid #ffc570", height: '100%' }}>
+                        <CardContent style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: 'center' }}>
+                          <FaUser size={40} color='#A59306' />
+                          <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Professional drivers</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <Card style={{ color: 'black', borderRadius: 10, border: "5px solid #ffc570", height: '100%' }}>
+                        <CardContent style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: 'center' }}>
+                          <FaCarAlt size={40} color='#A59306' />
+                          <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Clean and well-maintained vehicles</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
+                    <Grid item xs={12} sm={4}>
+                      <Card style={{ color: 'black', borderRadius: 10, border: "5px solid #ffc570", height: '100%' }}>
+                        <CardContent style={{ padding: 20, display: "flex", flexDirection: "column", alignItems: 'center' }}>
+                          <FaClipboardCheck size={40} color='#A59306' />
+                          <Typography variant="h6" style={{ fontWeight: 'bold', marginTop: 10, textAlign: 'center' }}>Easy booking process</Typography>
+                        </CardContent>
+                      </Card>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </div>
+              </Grid>
             </div>
           </Grid>
           <Grid item >
@@ -177,7 +206,6 @@ const Home = () => {
                 <Typography variant="body2" align="center">&copy; 2024 Cabzen. All rights reserved.</Typography>
               </Grid>
             </Grid>
-
           </Grid>
         </Grid>
       </div>
