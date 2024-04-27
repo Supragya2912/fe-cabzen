@@ -13,9 +13,11 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { IoCall } from "react-icons/io5";
+import { HiInformationCircle } from "react-icons/hi2";
+
 import { FaCarSide } from "react-icons/fa";
 
 export default function Navbar() {
@@ -122,7 +124,8 @@ export default function Navbar() {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <AppBar position="static"
                 sx={{
-                    background: 'linear-gradient(90deg, rgba(207,179,10,1) 0%, rgba(128,112,7,1) 50%, rgba(215,197,8,1) 100%)',
+                    backgroundColor: 'black',
+                    // background: 'linear-gradient(90deg, rgba(207,179,10,1) 0%, rgba(128,112,7,1) 50%, rgba(215,197,8,1) 100%)',
                     color: 'black',
                     borderRadius: 7,
                     width: "90%"
@@ -143,7 +146,7 @@ export default function Navbar() {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
+                        sx={{ display: { xs: 'none', sm: 'block' }, color: "white" }}
                     >
                         Cabzen
                     </Typography>
@@ -151,7 +154,6 @@ export default function Navbar() {
                         flexGrow: 1,
                         display: 'flex',
                         justifyContent: 'center',
-
                     }}>
                         <BottomNavigation
                             showLabels
@@ -159,18 +161,31 @@ export default function Navbar() {
                             onChange={(event, newValue) => {
                                 setValue(newValue);
                             }}
-
                             sx={{
-                                background: '#d1b50a',
+                                background: '#FFF7B0',
                                 maxWidth: '100%',
                                 width: '50%',
                                 borderRadius: 7,
+                                '& .Mui-selected': { // Styling the selected label
+                                    color: 'orange !important', // Making the selected label orange
+                                },
                             }}
                         >
-                            <BottomNavigationAction label="Cabs" icon={<FaCarSide />} />
-                            <BottomNavigationAction label="About Us" icon={<FavoriteIcon />} />
-                            <BottomNavigationAction label="Contact" icon={<LocationOnIcon />} />
+                            <BottomNavigationAction label="Cabs" icon={<FaCarSide size={25}/>} />
+                            <BottomNavigationAction label="About Us" icon={<HiInformationCircle size={25}/>} />
+                            <BottomNavigationAction label="Contact Us" icon={<IoCall size={25}/>} />
                         </BottomNavigation>
+                    </Box>
+                    <Box sx={{ display: 'flex' }}>
+                        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", marginRight: 2 }}>
+                            Login
+                        </Typography>
+                        <Typography variant="h5" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white" }}>
+                            |
+                        </Typography>
+                        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", marginLeft: 2 }}>
+                            Register
+                        </Typography>
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
@@ -180,7 +195,6 @@ export default function Navbar() {
                             aria-controls={menuId}
                             aria-haspopup="true"
                             onClick={handleProfileMenuOpen}
-                            color="inherit"
                         >
                             <AccountCircle />
                         </IconButton>
