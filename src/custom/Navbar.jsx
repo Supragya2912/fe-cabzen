@@ -13,10 +13,12 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import Button from '@mui/material/Button';  
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { IoCall } from "react-icons/io5";
 import { HiInformationCircle } from "react-icons/hi2";
+import { useNavigate } from 'react-router-dom';
 
 import { FaCarSide } from "react-icons/fa";
 
@@ -25,7 +27,7 @@ export default function Navbar() {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
     const [value, setValue] = React.useState(0);
-
+    const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -177,15 +179,19 @@ export default function Navbar() {
                         </BottomNavigation>
                     </Box>
                     <Box sx={{ display: 'flex' }}>
-                        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", marginRight: 2 }}>
+                        <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", backgroundColor:"black", marginRight: 2 }}
+                            onClick={() => navigate('/login')}
+                        >
                             Login
-                        </Typography>
+                        </Button>
                         <Typography variant="h5" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white" }}>
                             |
                         </Typography>
-                        <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", marginLeft: 2 }}>
+                        <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", marginLeft: 2 }}
+                            onClick={() => navigate('/register')}
+                        >
                             Register
-                        </Typography>
+                        </Button>
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                         <IconButton
