@@ -11,6 +11,9 @@ const Login = () => {
         setShowPassword(!showPassword);
     };
 
+    const loginUser = () => {
+    }
+
     return (
         <div style={{ height: '100vh', backgroundColor: '#FFF7B0', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Card style={{ width: '80%', maxWidth: 800, padding: '20px', borderRadius: '10px', backgroundColor: 'black', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
