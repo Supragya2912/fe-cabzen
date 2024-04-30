@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Navbar from '../custom/Navbar';
 import { Grid, Typography } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
@@ -15,10 +15,46 @@ import { FaHeadset, FaCar, FaUser, FaCarAlt, FaClipboardCheck } from 'react-icon
 import { IconButton, Card, CardContent } from '@mui/material';
 import { FaFacebook, FaTwitter, FaInstagram } from 'react-icons/fa';
 import { FaRupeeSign } from "react-icons/fa";
+import { useDispatch } from 'react-redux';
+import  { userSuccess } from '../redux/reducers/user';
 
 
+let BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 
 const Home = () => {
+
+  const [userData, setUserData] = useState({});
+  const dispatch = useDispatch();
+
+  const getUserProfile = useCallback(async() => {
+
+    const token = localStorage.getItem('token');
+
+    fetch(`${BASE_URL}/cabzen/auth/user`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        setUserData(data);
+        dispatch(userSuccess(data));
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  },[dispatch]);
+
+  useEffect(() => {
+    getUserProfile();
+  }, [getUserProfile]);
+
+  console.log(userData);
+
+
   return (
     <>
       <div style={{ position: 'fixed', top: 0, width: '100%', zIndex: 1000, overflowY: 'auto' }}>

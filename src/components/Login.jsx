@@ -1,17 +1,42 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Card, Typography, Grid, TextField, IconButton, InputAdornment, Button } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import login from '../assets/login.jpg';
+import { useNavigate } from 'react-router-dom';
 
+let BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 
 const Login = () => {
+
     const [showPassword, setShowPassword] = React.useState(false);
+    const [ data, setData] = useState({});
+    const navigate = useNavigate();
+   
 
     const handleTogglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
+
     const loginUser = () => {
+
+        fetch(`${BASE_URL}/cabzen/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                localStorage.setItem('token', data.accessToken);
+                navigate('/', { replace: true });
+               
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
     return (
@@ -29,6 +54,8 @@ const Login = () => {
                             variant="filled"
                             fullWidth
                             style={{ marginBottom: '20px', backgroundColor: 'white' }}
+                            value={data.email}
+                            onChange={(e) => setData({ ...data, email: e.target.value })}
                         />
                         <TextField
                             label="Password"
@@ -45,8 +72,10 @@ const Login = () => {
                                 ),
                             }}
                             style={{ marginBottom: '20px', backgroundColor: 'white' }}
+                            value={data.password}
+                            onChange={(e) => setData({ ...data, password: e.target.value })}
                         />
-                        <Button variant="contained" fullWidth style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px' }}>
+                        <Button variant="contained" fullWidth style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px' }} onClick={loginUser}>
                             Login
                         </Button>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>

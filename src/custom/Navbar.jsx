@@ -13,14 +13,14 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Button from '@mui/material/Button';  
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Button from '@mui/material/Button';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+// import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { IoCall } from "react-icons/io5";
 import { HiInformationCircle } from "react-icons/hi2";
 import { useNavigate } from 'react-router-dom';
-
 import { FaCarSide } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 export default function Navbar() {
 
@@ -30,6 +30,11 @@ export default function Navbar() {
     const navigate = useNavigate();
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+    const user = useSelector(state => state.user);
+    console.log("USER", user)
+
+    const accessToken = localStorage.getItem('token');
+   
 
     const handleProfileMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -67,6 +72,11 @@ export default function Navbar() {
         >
             <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
             <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            {
+                user?.data?.role === "admin" && (
+                    <MenuItem onClick={() => navigate('/admin')}>Admin Dashboard</MenuItem>
+                )
+            }
         </Menu>
     );
 
@@ -173,38 +183,63 @@ export default function Navbar() {
                                 },
                             }}
                         >
-                            <BottomNavigationAction label="Cabs" icon={<FaCarSide size={25}/>} />
-                            <BottomNavigationAction label="About Us" icon={<HiInformationCircle size={25}/>} />
-                            <BottomNavigationAction label="Contact Us" icon={<IoCall size={25}/>} />
+                            <BottomNavigationAction label="Cabs" icon={<FaCarSide size={25} />} />
+                            <BottomNavigationAction label="About Us" icon={<HiInformationCircle size={25} />} />
+                            <BottomNavigationAction label="Contact Us" icon={<IoCall size={25} />} />
                         </BottomNavigation>
                     </Box>
-                    <Box sx={{ display: 'flex' }}>
-                        <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", backgroundColor:"black", marginRight: 2 }}
-                            onClick={() => navigate('/login')}
-                        >
-                            Login
-                        </Button>
-                        <Typography variant="h5" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white" }}>
-                            |
-                        </Typography>
-                        <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", marginLeft: 2 }}
-                            onClick={() => navigate('/register')}
-                        >
-                            Register
-                        </Button>
-                    </Box>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </Box>
+
+                    {
+                        accessToken ? (
+                            <>
+                                <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", backgroundColor: "black", marginRight: 2 }}
+                                    onClick={() => {
+                                        localStorage.removeItem('token');
+                                        navigate('/');
+                                    }}
+                                >
+                                    Logout
+                                </Button>
+
+                                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                                    <IconButton
+                                        size="large"
+                                        edge="end"
+                                        aria-label="account of current user"
+                                        aria-controls={menuId}
+                                        aria-haspopup="true"
+
+                                        onClick={handleProfileMenuOpen}
+                                    >
+                                        <AccountCircle sx={{
+                                            color: "white"
+
+                                        }} />
+                                    </IconButton>
+                                </Box>
+                            </>
+                        ) : (
+
+                            <Box sx={{ display: 'flex' }}>
+                                <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", backgroundColor: "black", marginRight: 2 }}
+                                    onClick={() => navigate('/login')}
+                                >
+                                    Login
+                                </Button>
+                                <Typography variant="h5" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white" }}>
+                                    |
+                                </Typography>
+                                <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", marginLeft: 2 }}
+                                    onClick={() => navigate('/register')}
+                                >
+                                    Register
+                                </Button>
+                            </Box>
+
+                        )
+                    }
+
+
                     <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
