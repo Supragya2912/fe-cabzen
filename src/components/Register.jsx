@@ -4,19 +4,23 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import register from '../assets/register.jpg';
+import { useNavigate } from 'react-router-dom';
+let baseUrl = process.env.REACT_APP_SERVER_BASE_URL;
 
 
 const Register = () => {
+
     const [formData, setFormData] = useState({
         fullName: '',
         email: '',
         password: '',
         userName: '',
         phone: '',
-        role: 'driver' // Assuming role is preset to 'driver' for registration
+        role: 'user' 
     });
 
     const [role, setRole] = useState('');
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -26,10 +30,31 @@ const Register = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        // Handle form submission, e.g., send data to server
-        console.log(formData);
+        try {
+            
+            await fetch(`${baseUrl}/cabzen/auth/register-user`,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if(data.success){
+                    
+                    navigate('/login');
+                    
+                }else{
+                    alert(data.message);
+                }
+            });
+            
+        }catch (error) {
+            console.log(error);
+        }
     };
 
     return (

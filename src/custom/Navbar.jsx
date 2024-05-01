@@ -21,6 +21,9 @@ import { HiInformationCircle } from "react-icons/hi2";
 import { useNavigate } from 'react-router-dom';
 import { FaCarSide } from "react-icons/fa";
 import { useSelector } from 'react-redux';
+import { IoHomeSharp } from "react-icons/io5";
+
+
 
 export default function Navbar() {
 
@@ -31,7 +34,7 @@ export default function Navbar() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const user = useSelector(state => state.user);
-    console.log("USER", user)
+  
 
     const accessToken = localStorage.getItem('token');
    
@@ -45,7 +48,8 @@ export default function Navbar() {
     };
 
     const handleMenuClose = () => {
-        setAnchorEl(null);
+        
+        navigate('/profile');
         handleMobileMenuClose();
     };
 
@@ -70,8 +74,8 @@ export default function Navbar() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
+           
             {
                 user?.data?.role === "admin" && (
                     <MenuItem onClick={() => navigate('/admin')}>Admin Dashboard</MenuItem>
@@ -136,7 +140,7 @@ export default function Navbar() {
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <AppBar position="static"
                 sx={{
-                    backgroundColor: 'black',
+                    backgroundColor: '#FFA500',
                     // background: 'linear-gradient(90deg, rgba(207,179,10,1) 0%, rgba(128,112,7,1) 50%, rgba(215,197,8,1) 100%)',
                     color: 'black',
                     borderRadius: 7,
@@ -183,6 +187,9 @@ export default function Navbar() {
                                 },
                             }}
                         >
+                            <BottomNavigationAction label="Home" icon={<IoHomeSharp  size={25} />} onClick={()=>{
+                                navigate('/');
+                            }} />
                             <BottomNavigationAction label="Cabs" icon={<FaCarSide size={25} />} />
                             <BottomNavigationAction label="About Us" icon={<HiInformationCircle size={25} />} />
                             <BottomNavigationAction label="Contact Us" icon={<IoCall size={25} />} />
@@ -192,7 +199,7 @@ export default function Navbar() {
                     {
                         accessToken ? (
                             <>
-                                <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "white", backgroundColor: "black", marginRight: 2 }}
+                                <Button variant="outlined" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' }, color: "black",  marginRight: 2 }}
                                     onClick={() => {
                                         localStorage.removeItem('token');
                                         navigate('/');
