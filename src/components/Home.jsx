@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Navbar from '../custom/Navbar';
 import { Grid, Typography } from '@mui/material';
 import { Carousel } from 'react-responsive-carousel';
@@ -23,12 +23,12 @@ let BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 
 const Home = () => {
 
-  const [userData, setUserData] = useState({});
   const dispatch = useDispatch();
 
   const getUserProfile = useCallback(async() => {
 
     const token = localStorage.getItem('token');
+    console.log(token);
 
     fetch(`${BASE_URL}/cabzen/auth/user`, {
       method: 'POST',
@@ -40,7 +40,7 @@ const Home = () => {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
-        setUserData(data);
+  
         dispatch(userSuccess(data));
       })
       .catch((error) => {
@@ -52,7 +52,7 @@ const Home = () => {
     getUserProfile();
   }, [getUserProfile]);
 
-  console.log(userData);
+
 
 
   return (

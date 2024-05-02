@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -23,8 +23,6 @@ import { FaCarSide } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { IoHomeSharp } from "react-icons/io5";
 
-
-
 export default function Navbar() {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -48,7 +46,6 @@ export default function Navbar() {
     };
 
     const handleMenuClose = () => {
-        
         navigate('/profile');
         handleMobileMenuClose();
     };
@@ -59,6 +56,7 @@ export default function Navbar() {
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
+        
         <Menu
             anchorEl={anchorEl}
             anchorOrigin={{
@@ -71,6 +69,7 @@ export default function Navbar() {
                 vertical: 'top',
                 horizontal: 'right',
             }}
+            
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
@@ -220,7 +219,6 @@ export default function Navbar() {
                                     >
                                         <AccountCircle sx={{
                                             color: "white"
-
                                         }} />
                                     </IconButton>
                                 </Box>

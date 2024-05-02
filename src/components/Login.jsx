@@ -29,10 +29,16 @@ const Login = () => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
-                localStorage.setItem('token', data.accessToken);
-                navigate('/', { replace: true });
-               
+                console.log(data);
+              
+
+                if (data.status === 'success') {
+                    localStorage.setItem('token', data.accessToken);
+                    navigate('/');
+                }else{
+                    alert(data.message);
+                    return;
+                }
             })
             .catch((error) => {
                 console.error('Error:', error);
