@@ -1,17 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Card, Typography, Grid, TextField, IconButton, InputAdornment, Button } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import login from '../assets/login.jpg';
 import { useNavigate } from 'react-router-dom';
+import GradientCircularProgress from '../custom/Loaders';
 
 let BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 
 const Login = () => {
 
     const [showPassword, setShowPassword] = React.useState(false);
-    const [ data, setData] = useState({});
+    const [data, setData] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-   
+
 
     const handleTogglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -20,29 +22,43 @@ const Login = () => {
 
     const loginUser = () => {
 
-        fetch(`${BASE_URL}/cabzen/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-              
+        if (!data.email || !data.password) {
+            alert('Please fill in all fields');
+            return;
+        }
 
-                if (data.status === 'success') {
-                    localStorage.setItem('token', data.accessToken);
-                    navigate('/');
-                }else{
-                    alert(data.message);
-                    return;
-                }
+        setLoading(true);
+
+        try {
+
+            fetch(`${BASE_URL}/cabzen/auth/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
             })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.status === 'success') {
+                        localStorage.setItem('token', data.accessToken);
+                        navigate('/');
+                        setLoading(false);
+                    } else {
+                        alert(data.message);
+                        setLoading(false);
+                        return;
+
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -50,7 +66,7 @@ const Login = () => {
             <Card style={{ width: '80%', maxWidth: 800, padding: '20px', borderRadius: '10px', backgroundColor: 'black', boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
                 <Grid container spacing={3}>
                     <Grid item xs={6} style={{ display: 'flex', alignItems: 'center' }}>
-                        <img src={login} alt="Cabzen Logo" style={{ width: '100%', maxHeight: 500,borderRadius: '10px' }} />
+                        <img src={login} alt="Cabzen Logo" style={{ width: '100%', maxHeight: 500, borderRadius: '10px' }} />
                     </Grid>
                     <Grid item xs={6} style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                         {/* Right half - Text fields */}
@@ -82,11 +98,11 @@ const Login = () => {
                             onChange={(e) => setData({ ...data, password: e.target.value })}
                         />
                         <Button variant="contained" fullWidth style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px' }} onClick={loginUser}>
-                            Login
+                            {loading ? <GradientCircularProgress /> : 'Login'}
                         </Button>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                        <Typography variant="body2" style={{ color: 'white', textAlign: 'center' }}>Don't have an account? <a href="/register" style={{ color: 'orange', textDecoration: 'none' }}>Register</a></Typography>
-                            <Typography variant="body2" style={{ color: 'white', cursor: 'pointer' }}>Forgot Password?</Typography>
+                            <Typography variant="body2" style={{ color: 'white', textAlign: 'center' }}>Don't have an account? <a href="/register" style={{ color: 'orange', textDecoration: 'none' }}>Register</a></Typography>
+                            <Typography variant="body2" style={{ color: 'white', cursor: 'pointer' }}><a href='/forgot-password' style={{ color: 'orange', textDecoration: 'none' }}>Forgot Password?</a></Typography>
                         </div>
                     </Grid>
                 </Grid>

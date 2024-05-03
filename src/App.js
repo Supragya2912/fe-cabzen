@@ -7,6 +7,8 @@ import Register from './components/Register';
 import { Provider } from 'react-redux'
 import {store} from './redux/store'
 import UserProfile from './components/UserProfile';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 
 function App() {
 
@@ -17,6 +19,8 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/profile" element={<UserProfile />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword/>} />
     </Routes>
     </Provider>
   );
