@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaCarSide } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import { IoHomeSharp } from "react-icons/io5";
+import { useLocation } from 'react-router-dom';
 
 export default function Navbar() {
 
@@ -32,6 +33,7 @@ export default function Navbar() {
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const user = useSelector(state => state.user);
+    const location = useLocation();
   
 
     const accessToken = localStorage.getItem('token');
@@ -135,6 +137,26 @@ export default function Navbar() {
         </Menu>
     );
 
+    useEffect(() => {
+        // Update the value state based on the current location
+        switch (location.pathname) {
+            case '/':
+                setValue(0);
+                break;
+            case '/book-cabs':
+                setValue(1);
+                break;
+            case '/about-us':
+                setValue(2);
+                break;
+            case '/contact-us':
+                setValue(3);
+                break;
+            default:
+                setValue(0);
+        }
+    }, [location.pathname]);
+
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <AppBar position="static"
@@ -166,34 +188,48 @@ export default function Navbar() {
                         Cabzen
                     </Typography>
                     <Box sx={{
-                        flexGrow: 1,
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}>
-                        <BottomNavigation
-                            showLabels
-                            value={value}
-                            onChange={(event, newValue) => {
-                                setValue(newValue);
-                            }}
-                            sx={{
-                                background: '#FFF7B0',
-                                maxWidth: '100%',
-                                width: '50%',
-                                borderRadius: 7,
-                                '& .Mui-selected': { // Styling the selected label
-                                    color: 'orange !important', // Making the selected label orange
-                                },
-                            }}
-                        >
-                            <BottomNavigationAction label="Home" icon={<IoHomeSharp  size={25} />} onClick={()=>{
-                                navigate('/');
-                            }} />
-                            <BottomNavigationAction label="Cabs" icon={<FaCarSide size={25} />} />
-                            <BottomNavigationAction label="About Us" icon={<HiInformationCircle size={25} />} />
-                            <BottomNavigationAction label="Contact Us" icon={<IoCall size={25} />} />
-                        </BottomNavigation>
-                    </Box>
+            flexGrow: 1,
+            display: 'flex',
+            justifyContent: 'center',
+        }}>
+            <BottomNavigation
+                showLabels
+                value={value}
+                onChange={(event, newValue) => {
+                    setValue(newValue);
+                    switch (newValue) {
+                        case 0:
+                            navigate('/');
+                            break;
+                        case 1:
+                            navigate('/book-cabs');
+                            break;
+                        case 2:
+                            navigate('/about-us');
+                            break;
+                        case 3:
+                            navigate('/contact-us');
+                            break;
+                        default:
+                            navigate('/');
+                    }
+                }}
+                sx={{
+                    background: '#FFF7B0',
+                    maxWidth: '100%',
+                    width: '50%',
+                    borderRadius: 7,
+                    '& .Mui-selected': { // Styling the selected label
+                        color: 'orange !important', // Making the selected label orange
+                    },
+                }}
+            >
+                <BottomNavigationAction label="Home" icon={<IoHomeSharp  size={25} />} />
+                <BottomNavigationAction label="Cabs" icon={<FaCarSide size={25} />} />
+                <BottomNavigationAction label="About Us" icon={<HiInformationCircle size={25} />} />
+                <BottomNavigationAction label="Contact Us" icon={<IoCall size={25} />} />
+            </BottomNavigation>
+        </Box>
 
                     {
                         accessToken ? (

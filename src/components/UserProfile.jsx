@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import Navbar from '../custom/Navbar';
 import { Grid, Typography, Button, Paper, IconButton, TextField } from '@mui/material';
 import { FaUser } from "react-icons/fa";
@@ -7,6 +7,10 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RiEditLine } from "react-icons/ri";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
+import { userSuccess } from '../redux/reducers/user';
+
+let BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -22,6 +26,30 @@ const UserProfile = () => {
     const [showOldPassword, setShowOldPassword] = useState(false);
     const [showNewPassword, setShowNewPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const dispatch = useDispatch();
+
+    const getUserProfile = useCallback(async() => {
+
+        const token = localStorage.getItem('token');
+        console.log(token);
+    
+        fetch(`${BASE_URL}/cabzen/auth/user`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log('Success:', data);
+      
+            dispatch(userSuccess(data));
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+          });
+      },[dispatch]);
 
     const handleAddressSubmit = () => {
         if (location.address === '' || location.city === '' || location.state === '' || location.pincode === '') {
@@ -43,7 +71,9 @@ const UserProfile = () => {
                 .then(data => {
                     if (data.success) {
                         alert(data.message);
+                        getUserProfile();
                         navigate('/profile');
+
                     } else {
                         alert(data.message);
                     }

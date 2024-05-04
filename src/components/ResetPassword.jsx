@@ -1,64 +1,71 @@
 import React, {useState} from 'react';
-import { Card, Typography, Grid, TextField, IconButton, InputAdornment, Button } from '@mui/material';
+import { Card, Typography, Grid, TextField,  Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import GradientCircularProgress from '../custom/Loaders';
 import password from '../assets/password.jpeg';
+
 
 let BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 
 const ResetPassword = () => {
 
 
-    const [ data, setData] = useState({});
+    const [ data, setData] = useState({
+        email: '',
+        otp: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
    
 
-
-    // const loginUser = () => {
-
-    //     if (!data.email || !data.password) {
-    //         alert('Please fill in all fields');
-    //         return;
-    //     }
-
-    //     setLoading(true);
-
-    //     try {
-
-    //     fetch(`${BASE_URL}/cabzen/auth/login`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(data),
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-                
-    //             if (data.status === 'success') {
-    //                 localStorage.setItem('token', data.accessToken);
-    //                 navigate('/');
-    //                 setLoading(false);
-    //             }else{
-    //                 alert(data.message);
-    //                 setLoading(false);
-    //                 return;
-                 
-    //             }
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         });
-
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-
     const resetPassword = () => {
 
+        if(!data.email || !data.otp || !data.newPassword || !data.confirmPassword){
+            alert('Please fill in all fields');
+            return;
+        }
 
+        if(data.newPassword !== data.confirmPassword){
+            alert('Passwords do not match');
+            return;
+        }
+
+        setLoading(true);
+
+        try {
+
+            fetch(`${BASE_URL}/cabzen/auth/reset-password`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            })
+                .then(response => response.json())
+                .then(data => {
+
+                    if (data.status === 'success') {
+                       
+                        navigate('/login');
+                        setLoading(false);
+                    }
+                    else {
+                       
+                        setLoading(false);
+                        return;
+                    }
+
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -72,24 +79,42 @@ const ResetPassword = () => {
                         {/* Right half - Text fields */}
                         <Typography variant="h5" style={{ color: 'black', marginBottom: '20px', textAlign: 'center', fontWeight:'bold' }}>Reset Password</Typography>
                         <Typography style={{ color: 'black', marginBottom: '20px', fontSize:15, textAlign:'center' }}>Enter your new password for the account</Typography>
+                    
                         <TextField
+                            label="Enter your email address"
+                            variant="filled"
+                            fullWidth
+                            style={{ marginBottom: '20px', backgroundColor: 'white' }}
+                            value={data.email}
+                            onChange={(e) => setData({ ...data, email: e.target.value })}
+                        />
+                       
+                         <TextField
+                            label="Enter OTP sent to your email"
+                            variant="filled"
+                            fullWidth
+                            style={{ marginBottom: '20px', backgroundColor: 'white' }}
+                            value={data.otp}
+                            onChange={(e) => setData({ ...data, otp: e.target.value })}
+                        />
+                            <TextField
                             label="New Password"
                             variant="filled"
                             fullWidth
                             style={{ marginBottom: '20px', backgroundColor: 'white' }}
-                            value={data.email}
-                            onChange={(e) => setData({ ...data, email: e.target.value })}
+                            value = {data.newPassword}
+                            onChange={(e) => setData({ ...data, newPassword: e.target.value })}
                         />
-                         <TextField
+                          <TextField
                             label="Confirm Password"
                             variant="filled"
                             fullWidth
                             style={{ marginBottom: '20px', backgroundColor: 'white' }}
-                            value={data.email}
-                            onChange={(e) => setData({ ...data, email: e.target.value })}
+                            value = {data.confirmPassword}
+                            onChange={(e) => setData({ ...data, confirmPassword: e.target.value })}
                         />
-                        <Button variant="contained" fullWidth style={{ backgroundColor: 'black', color: 'white', marginBottom: '20px' }} onClick={resetPassword}>
-                            {loading ? <GradientCircularProgress /> : 'Submit'}
+                        <Button variant="contained" fullWidth style={{ backgroundColor: 'orange', color: 'white', marginBottom: '20px' }} onClick={resetPassword}>
+                            {loading ? <GradientCircularProgress /> : 'Reset and Sign In'}
                         </Button>
                     </Grid>
                 </Grid>

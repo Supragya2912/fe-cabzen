@@ -9,6 +9,7 @@ import {store} from './redux/store'
 import UserProfile from './components/UserProfile';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
+import Cabs from './components/Cabs';
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword/>} />
+      <Route path="/book-cabs" element={<Cabs />} />
     </Routes>
     </Provider>
   );
