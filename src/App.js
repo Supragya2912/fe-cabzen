@@ -10,6 +10,7 @@ import UserProfile from './components/UserProfile';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 import Cabs from './components/Cabs';
+import Admin from './components/Admin';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword/>} />
       <Route path="/book-cabs" element={<Cabs />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
     </Provider>
   );
