@@ -7,6 +7,8 @@ import { FaIdCard } from "react-icons/fa6";
 import { FaCarAlt } from "react-icons/fa";
 import { FaTaxi } from "react-icons/fa6";
 import CustomTable from '../custom/CustomTable';
+import BrandTable from '../custom/BrandTable';
+import CabTable from '../custom/CabTable';
 let BASE_URL = process.env.REACT_APP_SERVER_BASE_URL;
 
 const Admin = () => {
@@ -177,9 +179,9 @@ const Admin = () => {
             case 'drivers':
                 return <CustomTable data={driverData} />;
             case 'brands':
-                return <CustomTable data={brandData} />;
+                return <BrandTable data={brandData} />;
             case 'cabs':
-                return <CustomTable data={cabData} />;
+                return <CabTable data={cabData} />;
             default:
                 return null;
         }
@@ -191,6 +193,8 @@ const Admin = () => {
         getBrands();
         getCabs();
     }, [getBrands, getDrivers, getUsers, getCabs]);
+
+    console.log(brandData);
 
     return (
         <>
